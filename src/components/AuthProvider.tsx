@@ -1,49 +1,71 @@
+import { createContext, useContext, useState } from 'react';
 
-import { createContext, useContext, useEffect, useState } from 'react';
-import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
+type User = {
+  id: string;
+  email: string;
+  fullName?: string;
+};
 
 type AuthContextType = {
   user: User | null;
-  session: Session | null;
   isLoading: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+  signup: (email: string, password: string, fullName: string) => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType>({ 
   user: null, 
-  session: null, 
-  isLoading: true 
+  isLoading: false,
+  login: async () => {},
+  logout: async () => {},
+  signup: async () => {}
 });
 
 export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    // Set up auth state listener FIRST
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        setIsLoading(false);
-      }
-    );
-
-    // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
+  const login = async (email: string, password: string) => {
+    setIsLoading(true);
+    try {
+      // TODO: Implement your new authentication logic here
+      setUser({ id: '1', email });
+    } catch (error) {
+      throw error;
+    } finally {
       setIsLoading(false);
-    });
+    }
+  };
 
-    return () => subscription.unsubscribe();
-  }, []);
+  const logout = async () => {
+    setIsLoading(true);
+    try {
+      // TODO: Implement your new logout logic here
+      setUser(null);
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const signup = async (email: string, password: string, fullName: string) => {
+    setIsLoading(true);
+    try {
+      // TODO: Implement your new signup logic here
+      setUser({ id: '1', email, fullName });
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <AuthContext.Provider value={{ user, session, isLoading }}>
+    <AuthContext.Provider value={{ user, isLoading, login, logout, signup }}>
       {children}
     </AuthContext.Provider>
   );

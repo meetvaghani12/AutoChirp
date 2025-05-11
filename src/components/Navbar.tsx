@@ -1,38 +1,25 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeProvider";
 import { Zap, Menu, X, LogOut } from "lucide-react";
 import { useAuth } from "./AuthProvider";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const cleanupAuthState = () => {
-    localStorage.removeItem('supabase.auth.token');
-    Object.keys(localStorage).forEach((key) => {
-      if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
-        localStorage.removeItem(key);
-      }
-    });
-  };
-
   const handleSignOut = async () => {
     try {
-      cleanupAuthState();
-      await supabase.auth.signOut({ scope: 'global' });
+      await logout();
       toast({
         title: "Signed out",
         description: "You have been signed out successfully.",
       });
       navigate("/");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast({
         title: "Error signing out",
@@ -83,10 +70,10 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <Link to="/auth">
+              <Link to="/signin">
                 <Button variant="ghost">Sign In</Button>
               </Link>
-              <Link to="/auth" onClick={() => localStorage.setItem('authMode', 'signup')}>
+              <Link to="/signup">
                 <Button>Sign Up</Button>
               </Link>
             </>
@@ -151,13 +138,10 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
-                  <Link to="/auth" onClick={() => setIsMenuOpen(false)}>
+                  <Link to="/signin" onClick={() => setIsMenuOpen(false)}>
                     <Button variant="ghost" className="w-full">Sign In</Button>
                   </Link>
-                  <Link to="/auth" onClick={() => {
-                    localStorage.setItem('authMode', 'signup');
-                    setIsMenuOpen(false);
-                  }}>
+                  <Link to="/signup" onClick={() => setIsMenuOpen(false)}>
                     <Button className="w-full">Sign Up</Button>
                   </Link>
                 </>

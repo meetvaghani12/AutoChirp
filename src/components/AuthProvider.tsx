@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 type User = {
   id: string;
@@ -25,14 +25,28 @@ const AuthContext = createContext<AuthContextType>({
 export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    // Check localStorage for existing user data
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [isLoading, setIsLoading] = useState(false);
+
+  // Update localStorage when user state changes
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
+  }, [user]);
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     try {
       // TODO: Implement your new authentication logic here
-      setUser({ id: '1', email });
+      const newUser = { id: '1', email };
+      setUser(newUser);
     } catch (error) {
       throw error;
     } finally {
@@ -56,7 +70,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
     try {
       // TODO: Implement your new signup logic here
-      setUser({ id: '1', email, fullName });
+      const newUser = { id: '1', email, fullName };
+      setUser(newUser);
     } catch (error) {
       throw error;
     } finally {

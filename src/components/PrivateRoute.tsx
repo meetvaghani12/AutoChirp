@@ -1,4 +1,3 @@
-
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
 
@@ -6,7 +5,7 @@ interface PrivateRouteProps {
   redirectTo?: string;
 }
 
-export const PrivateRoute = ({ redirectTo = "/auth" }: PrivateRouteProps) => {
+export const PrivateRoute = ({ redirectTo = "/signin" }: PrivateRouteProps) => {
   const { user, isLoading } = useAuth();
   
   // If auth is still loading, show nothing or a loading indicator

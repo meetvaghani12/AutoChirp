@@ -12,6 +12,8 @@ import {
   Settings,
   Menu,
   LogOut,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 // Create a context for the sidebar state
@@ -94,14 +96,19 @@ export function Layout({ children }: { children: ReactNode }) {
       </motion.div>
       
       <Button
-        variant="outline"
+        variant="ghost"
         size="icon"
         onClick={toggleSidebar}
-        className={`fixed top-4 z-30 ${
-          collapsed ? "left-4" : "left-64"
-        } transition-all duration-300 rounded-full shadow-md`}
+        className={`fixed top-4 z-30 h-7 w-7 rounded-full shadow-sm border ${
+          collapsed ? "left-4" : "left-[248px]"
+        } transition-all duration-300`}
       >
-        <Menu className="h-4 w-4" />
+        {collapsed ? (
+          <ChevronRight className="h-4 w-4" />
+        ) : (
+          <ChevronLeft className="h-4 w-4" />
+        )}
+        <span className="sr-only">Toggle Sidebar</span>
       </Button>
     </div>
   );

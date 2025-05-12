@@ -7,12 +7,11 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Instagram, AlertCircle, User, Check, X, Copy, ArrowUpRight, RefreshCcw } from "lucide-react";
-import Sidebar, { useSidebar } from "./Sidebar";
+import { Layout } from "./Sidebar";
 
 export default function IntegrationPage() {
   const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { collapsed } = useSidebar();
   
   const handleConnect = () => {
     setIsLoading(true);
@@ -27,17 +26,8 @@ export default function IntegrationPage() {
   };
   
   return (
-    <div className="flex min-h-screen bg-background">
-      <Sidebar />
-      
-      <motion.div 
-        className="flex-1 p-8"
-        initial={false}
-        animate={{ 
-          marginLeft: collapsed ? 0 : 256 
-        }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
-      >
+    <Layout>
+      <div className="p-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Instagram Integration</h1>
         </div>
@@ -377,7 +367,7 @@ export default function IntegrationPage() {
             </Card>
           </TabsContent>
         </Tabs>
-      </motion.div>
-    </div>
+      </div>
+    </Layout>
   );
 }

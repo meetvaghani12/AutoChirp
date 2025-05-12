@@ -18,6 +18,7 @@ import AnalyticsPage from "./components/AnalyticsPage";
 import AutomationPage from "./components/AutomationPage";
 import IntegrationPage from "./components/IntegrationPage";
 import PricingPage from "./components/PricingPage";
+import SettingsPage from "./components/SettingsPage";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
                   <Route path="/analytics" element={<AnalyticsPage />} />
                   <Route path="/automation" element={<AutomationPage />} />
                   <Route path="/integration" element={<IntegrationPage />} />
+                  <Route path="/settings" element={<SettingsPage />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </AnimatePresence>

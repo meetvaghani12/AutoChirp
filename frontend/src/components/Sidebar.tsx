@@ -14,6 +14,7 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  CreditCard,
 } from "lucide-react";
 
 // Create a context for the sidebar state
@@ -57,6 +58,11 @@ const sidebarItems: SidebarItem[] = [
   {
     name: "Pricing",
     path: "/pricing",
+    icon: <CreditCard className="h-5 w-5" />,
+  },
+  {
+    name: "Settings",
+    path: "/settings",
     icon: <Settings className="h-5 w-5" />,
   },
 ];

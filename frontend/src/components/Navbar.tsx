@@ -123,10 +123,10 @@ export default function Navbar() {
               {user ? (
                 <>
                   <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
-                    <Button variant="ghost" className="w-full">Dashboard</Button>
+                    <Button variant="default" className="w-full">Dashboard</Button>
                   </Link>
                   <Button 
-                    variant="default" 
+                    variant="outline" 
                     className="w-full"
                     onClick={() => {
                       handleSignOut();

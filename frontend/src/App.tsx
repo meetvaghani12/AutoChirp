@@ -7,6 +7,8 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { motion, AnimatePresence } from "framer-motion";
 import { AuthProvider } from "@/components/AuthProvider";
 import { SidebarProvider } from "@/components/Sidebar";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import RedirectIfAuthenticated from "@/components/RedirectIfAuthenticated";
 
 import Index from "./pages/Index";
 import SignIn from "./pages/SignIn";
@@ -33,16 +35,26 @@ const App = () => (
             <BrowserRouter>
               <AnimatePresence mode="wait">
                 <Routes>
+                  {/* Public routes */}
                   <Route path="/" element={<Index />} />
-                  <Route path="/signin" element={<SignIn />} />
-                  <Route path="/signup" element={<SignUp />} />
-                  <Route path="/verify" element={<VerifyRegistration />} />
                   <Route path="/pricing" element={<PricingPage />} />
-                  <Route path="/dashboard" element={<DashboardPage />} />
-                  <Route path="/analytics" element={<AnalyticsPage />} />
-                  <Route path="/automation" element={<AutomationPage />} />
-                  <Route path="/integration" element={<IntegrationPage />} />
-                  <Route path="/settings" element={<SettingsPage />} />
+                  <Route path="/verify" element={<VerifyRegistration />} />
+                  
+                  {/* Auth routes - redirect to dashboard if already logged in */}
+                  <Route element={<RedirectIfAuthenticated />}>
+                    <Route path="/signin" element={<SignIn />} />
+                    <Route path="/signup" element={<SignUp />} />
+                  </Route>
+                  
+                  {/* Protected routes - redirect to signin if not logged in */}
+                  <Route element={<ProtectedRoute />}>
+                    <Route path="/dashboard" element={<DashboardPage />} />
+                    <Route path="/analytics" element={<AnalyticsPage />} />
+                    <Route path="/automation" element={<AutomationPage />} />
+                    <Route path="/integration" element={<IntegrationPage />} />
+                    <Route path="/settings" element={<SettingsPage />} />
+                  </Route>
+                  
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </AnimatePresence>

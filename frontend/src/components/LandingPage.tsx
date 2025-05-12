@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -14,9 +13,11 @@ import {
   Users
 } from "lucide-react";
 import Navbar from "./Navbar";
+import { useAuth } from "./AuthProvider";
 
 export default function LandingPage() {
   const [isVisible, setIsVisible] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     setIsVisible(true);
@@ -75,17 +76,21 @@ export default function LandingPage() {
                 animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
                 transition={{ duration: 0.5, delay: 0.6 }}
               >
-                <Link to="/signup">
-                  <Button size="lg" className="gap-1">
-                    Get Started
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </Link>
-                <Link to="/dashboard">
-                  <Button size="lg" variant="outline" className="gap-1">
-                    Dashboard
-                  </Button>
-                </Link>
+                {user ? (
+                  <Link to="/dashboard">
+                    <Button size="lg" className="gap-1">
+                      Dashboard
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link to="/signin">
+                    <Button size="lg" className="gap-1">
+                      Get Started
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                )}
               </motion.div>
               <motion.div 
                 className="mt-2"
@@ -264,12 +269,21 @@ export default function LandingPage() {
               </p>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Link to="/signup">
-                <Button size="lg" className="gap-1">
-                  Get Started
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
+              {user ? (
+                <Link to="/dashboard">
+                  <Button size="lg" className="gap-1">
+                    Dashboard
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+              ) : (
+                <Link to="/signin">
+                  <Button size="lg" className="gap-1">
+                    Get Started
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+              )}
               <Link to="/pricing">
                 <Button size="lg" variant="outline">
                   View Pricing

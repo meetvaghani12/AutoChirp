@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
@@ -6,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Instagram, MessageSquare, User, Users, Zap,Settings, ChevronRight } from "lucide-react";
-import Sidebar from "./Sidebar";
+import { Instagram, MessageSquare, User, Users, Zap, Settings, ChevronRight } from "lucide-react";
+import { Layout } from "./Sidebar";
 
 // Mock data for charts
 const messageData = [
@@ -49,10 +48,8 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <Sidebar />
-      
-      <div className="flex-1 ml-64 p-8">
+    <Layout>
+      <div className="p-8">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold">Dashboard</h1>
           <div className="flex items-center space-x-4">
@@ -311,6 +308,6 @@ export default function DashboardPage() {
           </Card>
         </motion.div>
       </div>
-    </div>
+    </Layout>
   );
 }

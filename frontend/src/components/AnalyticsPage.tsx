@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ResponsiveContainer, LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
@@ -6,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { BarChart3, TrendingUp, Users, MessageSquare, Clock } from "lucide-react";
-import Sidebar from "./Sidebar";
+import { Layout } from "./Sidebar";
 
 // Mock data for charts
 const messageData = [
@@ -43,10 +42,8 @@ export default function AnalyticsPage() {
   const [dateRange, setDateRange] = useState("7d");
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <Sidebar />
-      
-      <div className="flex-1 ml-64 p-8">
+    <Layout>
+      <div className="p-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Analytics</h1>
           <Select defaultValue="7d" onValueChange={setDateRange}>
@@ -399,6 +396,6 @@ export default function AnalyticsPage() {
           </Tabs>
         </motion.div>
       </div>
-    </div>
+    </Layout>
   );
 }

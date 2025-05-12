@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Check, X } from "lucide-react";
-import Navbar from "./Navbar";
+import Sidebar, { useSidebar } from "./Sidebar";
 
 const pricingPlans = [
   {
@@ -68,17 +67,29 @@ const pricingPlans = [
 
 export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState("monthly");
+  const { collapsed } = useSidebar();
   
   return (
-    <div className="flex min-h-screen flex-col">
-      <Navbar />
+    <div className="flex min-h-screen bg-background">
+      <Sidebar />
       
-      <main className="flex-1">
-        <section className="container py-12 md:py-24 lg:py-32">
+      <motion.div 
+        className="flex-1 p-8"
+        initial={false}
+        animate={{ 
+          marginLeft: collapsed ? 0 : 256 
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+      >
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-3xl font-bold">Pricing</h1>
+        </div>
+        
+        <section className="py-8">
           <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
-            <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-5xl">
               Simple, transparent pricing
-            </h1>
+            </h2>
             <p className="max-w-[85%] text-muted-foreground sm:text-lg">
               Choose the perfect plan for your Instagram automation needs. All plans include our core automation features.
             </p>
@@ -202,26 +213,7 @@ export default function PricingPage() {
             ))}
           </div>
         </section>
-      </main>
-
-      <footer className="border-t bg-secondary/20">
-        <div className="container flex flex-col gap-6 py-8 md:flex-row md:items-center">
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-bold">AutoChirp</span>
-          </div>
-          <nav className="flex gap-4 sm:gap-6 md:ml-auto">
-            <a href="#" className="text-sm hover:underline underline-offset-4">
-              Terms
-            </a>
-            <a href="#" className="text-sm hover:underline underline-offset-4">
-              Privacy
-            </a>
-            <a href="#" className="text-sm hover:underline underline-offset-4">
-              Contact
-            </a>
-          </nav>
-        </div>
-      </footer>
+      </motion.div>
     </div>
   );
 }

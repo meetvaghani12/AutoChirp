@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -11,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageSquare, Plus, Save, Clock, Trash2, Edit, PlayCircle, PauseCircle, Calendar } from "lucide-react";
-import Sidebar from "./Sidebar";
+import Sidebar, { useSidebar } from "./Sidebar";
 
 const automationRules = [
   {
@@ -48,6 +47,7 @@ export default function AutomationPage() {
   const [rules, setRules] = useState(automationRules);
   const [editingRule, setEditingRule] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const { collapsed } = useSidebar();
   
   const toggleRuleStatus = (id) => {
     setRules(rules.map(rule => 
@@ -68,7 +68,14 @@ export default function AutomationPage() {
     <div className="flex min-h-screen bg-background">
       <Sidebar />
       
-      <div className="flex-1 ml-64 p-8">
+      <motion.div 
+        className="flex-1 p-8"
+        initial={false}
+        animate={{ 
+          marginLeft: collapsed ? 0 : 256 
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+      >
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Automation Rules</h1>
           <Button onClick={() => { setEditingRule(null); setShowAddForm(true); }} className="gap-2">
@@ -219,7 +226,7 @@ export default function AutomationPage() {
             </Card>
           </motion.div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 }

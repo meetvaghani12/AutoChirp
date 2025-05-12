@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { motion, AnimatePresence } from "framer-motion";
 import { AuthProvider } from "@/components/AuthProvider";
+import { SidebarProvider } from "@/components/Sidebar";
 
 import Index from "./pages/Index";
 import SignIn from "./pages/SignIn";
@@ -27,22 +28,24 @@ const App = () => (
         <Toaster />
         <Sonner />
         <AuthProvider>
-          <BrowserRouter>
-            <AnimatePresence mode="wait">
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/signin" element={<SignIn />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/verify" element={<VerifyRegistration />} />
-                <Route path="/pricing" element={<PricingPage />} />
-                <Route path="/dashboard" element={<DashboardPage />} />
-                <Route path="/analytics" element={<AnalyticsPage />} />
-                <Route path="/automation" element={<AutomationPage />} />
-                <Route path="/integration" element={<IntegrationPage />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </AnimatePresence>
-          </BrowserRouter>
+          <SidebarProvider>
+            <BrowserRouter>
+              <AnimatePresence mode="wait">
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/signin" element={<SignIn />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route path="/verify" element={<VerifyRegistration />} />
+                  <Route path="/pricing" element={<PricingPage />} />
+                  <Route path="/dashboard" element={<DashboardPage />} />
+                  <Route path="/analytics" element={<AnalyticsPage />} />
+                  <Route path="/automation" element={<AutomationPage />} />
+                  <Route path="/integration" element={<IntegrationPage />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </AnimatePresence>
+            </BrowserRouter>
+          </SidebarProvider>
         </AuthProvider>
       </TooltipProvider>
     </ThemeProvider>
